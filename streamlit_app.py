@@ -17,6 +17,6 @@ if uploaded_file is not None:
         btn = st.download_button(
             label="Download Processed ZIP file",
             data=file_pointer,
-            file_name="output.zip",
+            file_name=f'{uploaded_file.name}.zip',
             mime="application/zip"
         )
