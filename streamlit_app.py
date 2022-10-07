@@ -13,10 +13,17 @@ if uploaded_file is not None:
     preprocessing.main(uploaded_file)
 
     # download button to download the processed zip file
-    with open(f'{os.getcwd()}\\output.zip', "rb") as file_pointer:
+    # with open(f'{os.getcwd()}\\output.zip', "rb") as file_pointer:
+    #     btn = st.download_button(
+    #         label="Download Processed ZIP file",
+    #         data=file_pointer,
+    #         file_name='output.zip', #{uploaded_file.name}.zip',
+    #         mime="application/zip"
+    #     )
+    with open(f'{os.getcwd()}\\requirements.txt', "rb") as file_pointer:
         btn = st.download_button(
             label="Download Processed ZIP file",
             data=file_pointer,
-            file_name=f'{uploaded_file.name}.zip',
-            mime="application/zip"
+            file_name='output.txt', #{uploaded_file.name}.zip',
+            mime="text/csv"
         )
