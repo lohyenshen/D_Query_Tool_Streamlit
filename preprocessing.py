@@ -33,16 +33,7 @@ def rearrange_columns(df):
 def save_df_as_excel(df, standard_type):
     # this method takes a giant df
     # group by all the store name
-    # save each store as an excel file
-
-    # create directory "D. Query tool" if not exist
-    d_query_tool_dir = f'{os.getcwd()}\\D. Query tool'
-    if not os.path.exists(d_query_tool_dir):
-        os.mkdir(d_query_tool_dir)
-    # create subdirectory "{standard_type}" if not exist
-    standard_type_path = f'{os.getcwd()}\\D. Query tool\\{standard_type}'
-    if not os.path.exists(standard_type_path):
-        os.mkdir(standard_type_path)
+    # save each store as a xlsx file
 
     groups = df.groupby('Store Name')
 
@@ -62,6 +53,30 @@ def save_df_as_excel(df, standard_type):
         except OSError:
             print(store_name)
             store_name = store_name.replace('\n', '')
+
+
+def create_required_directories():
+    # create directory "D. Query tool" if not exist
+    # d_query_tool_dir = f'{os.getcwd()}\\D. Query tool'
+    # if not os.path.exists(d_query_tool_dir):
+    #     os.mkdir(d_query_tool_dir)
+    #
+    # # create subdirectory "{standard_type}" if not exist
+    # standard_type_path = f'{os.getcwd()}\\D. Query tool\\{standard_type}'
+    # if not os.path.exists(standard_type_path):
+    #     os.mkdir(standard_type_path)
+
+    current_dir = os.getcwd()
+
+    d_query_tool_dir = current_dir + '\\D. Query tool'
+    os.mkdir(d_query_tool_dir)
+
+    standard_type_dir = d_query_tool_dir + '\\Standard'
+    os.mkdir(standard_type_dir)
+
+    non_standard_type_dir = d_query_tool_dir + '\\Non Standard'
+    os.mkdir(non_standard_type_dir)
+
 
 
 def main(uploaded_file):
@@ -117,9 +132,21 @@ def main(uploaded_file):
 
 
 
+    #############################################
+    # STEP 3, create required directories
+    #############################################
+    try:
+        # remove previous folder
+        shutil.rmtree(f'{os.getcwd()}\\D. Query tool', ignore_errors=True)
+        create_required_directories()
+    except:
+        pass
+
+
+
 
     ##############################################
-    # STEP 3, save them as xlsx file, then zip it
+    # STEP 4, save them as xlsx file, then zip it
     ##############################################
     save_df_as_excel(ABC_standard, 'Standard')
     save_df_as_excel(ABC_nonstandard, 'Non Standard')
