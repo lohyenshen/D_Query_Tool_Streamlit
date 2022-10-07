@@ -5,11 +5,13 @@ import numpy as np
 import pandas as pd
 import os
 import shutil
+# https://stackoverflow.com/questions/14826888/python-os-path-join-on-a-list
 
 
 def save_excel(file_name, df, standard_type):
-    with pd.ExcelWriter(f'{os.getcwd()}\\D. Query tool\\{standard_type}\\{file_name}.xlsx',
-                        engine='xlsxwriter') as writer:
+    # x = f'{os.getcwd()}\\D. Query tool\\{standard_type}\\{file_name}.xlsx'
+    x = os.path.join(*['.', 'D. Query tool', standard_type, f'{file_name}.xlsx'])
+    with pd.ExcelWriter(x, engine='xlsxwriter') as writer:
         df.to_excel(writer, index=False, sheet_name='Service Packages')
 
 
@@ -66,15 +68,13 @@ def create_required_directories():
     # if not os.path.exists(standard_type_path):
     #     os.mkdir(standard_type_path)
 
-    current_dir = os.getcwd()
-
-    d_query_tool_dir = current_dir + '\\D. Query tool'
+    d_query_tool_dir = os.path.join(*['.', 'D. Query tool'])
     os.mkdir(d_query_tool_dir)
 
-    standard_type_dir = d_query_tool_dir + '\\Standard'
+    standard_type_dir = os.path.join(*[d_query_tool_dir, 'Standard'])
     os.mkdir(standard_type_dir)
 
-    non_standard_type_dir = d_query_tool_dir + '\\Non Standard'
+    non_standard_type_dir = os.path.join(*[d_query_tool_dir, 'Non Standard'])
     os.mkdir(non_standard_type_dir)
 
 
@@ -137,7 +137,8 @@ def main(uploaded_file):
     #############################################
     try:
         # remove previous folder
-        shutil.rmtree(f'{os.getcwd()}\\D. Query tool', ignore_errors=True)
+        # shutil.rmtree(f'{os.getcwd()}\\D. Query tool', ignore_errors=True)
+        shutil.rmtree(os.path.join(*['.', 'D. Query tool']), ignore_errors=True)
         create_required_directories()
     except:
         pass
@@ -153,4 +154,7 @@ def main(uploaded_file):
 
     # save folder as zip
     #                            output zip              input folder
-    shutil.make_archive(f'{os.getcwd()}\\output', 'zip', f'{os.getcwd()}\\D. Query tool')
+    # shutil.make_archive(f'{os.getcwd()}\\output', 'zip', f'{os.getcwd()}\\D. Query tool')
+    from_ = os.path.join(*['.', 'D. Query tool'])
+    to_   = os.path.join(*['.', 'output'])
+    shutil.make_archive( to_, 'zip', from_)
