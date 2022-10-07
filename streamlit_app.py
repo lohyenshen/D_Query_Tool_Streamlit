@@ -12,7 +12,7 @@ if uploaded_file is not None:
     preprocessing.main(uploaded_file)
 
     # download button to download the processed zip file
-    with open("output.zip", "rb") as file_pointer:
+    with open(".\\output.zip", "rb") as file_pointer:
         btn = st.download_button(
             label="Download Processed ZIP file",
             data=file_pointer,
