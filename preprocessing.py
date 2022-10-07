@@ -152,5 +152,5 @@ def main(uploaded_file):
     save_df_as_excel(ABC_nonstandard, 'Non Standard')
 
     # save folder as zip
-    #                     output zip              input folder
-    shutil.make_archive('output', 'zip', 'D. Query tool')
+    #                            output zip              input folder
+    shutil.make_archive(f'{os.getcwd()}\\output', 'zip', f'{os.getcwd()}\\D. Query tool')
