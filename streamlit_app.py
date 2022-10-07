@@ -20,7 +20,7 @@ if uploaded_file is not None:
     #         file_name='output.zip', #{uploaded_file.name}.zip',
     #         mime="application/zip"
     #     )
-    with open(f'{os.getcwd()}\\requirements.txt', "rb") as file_pointer:
+    with open(os.path.join('.', 'requirements.txt'), "rb") as file_pointer:
         btn = st.download_button(
             label="Download Processed ZIP file",
             data=file_pointer,
